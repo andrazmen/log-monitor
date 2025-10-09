@@ -1,0 +1,3 @@
+server/db/log_system.sql
+server/.env
+server/node_modules/
