@@ -10,7 +10,6 @@ const authenticateUser = require("./middleware/auth");
 const login = require("./routes/login");
 const users = require("./routes/users");
 const projects = require("./routes/projects");
-const logs = require("./routes/logs");
 
 app.use(express.json());
 

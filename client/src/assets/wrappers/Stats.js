@@ -2,8 +2,6 @@ import styled from "styled-components";
 
 const Wrapper = styled.section`
   .stats-center {
-    width: var(--view-width);
-    max-width: var(--max-width);
     margin: 0 auto;
     display: flex;
     flex-direction: column;

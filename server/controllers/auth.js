@@ -39,8 +39,8 @@ const login = async (req, res) => {
       res.status(401).json({ error: "Unauthorized: invalid credentials" });
     }
     console.log("OUTPUT", output.length);
-    const isMatch = await bcrypt.compare(data.password, output[0]?.password);
-    if (!isMatch) {
+    const match = await bcrypt.compare(data.password, output[0]?.password);
+    if (!match) {
       res.status(401).json({ error: "Unauthorized: wrong password" });
     }
     console.log("Passwords match, authenticated");

@@ -100,8 +100,6 @@ const addLog = async (req, res) => {
     severity: req.body.severity,
     message: req.body.message,
   };
-  console.log(data);
-
   if (
     !data.project_id ||
     !data.source ||
