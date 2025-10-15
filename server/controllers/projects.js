@@ -18,7 +18,7 @@ const getProjects = async (req, res) => {
           console.error("Database error;", err);
           return res.status(500).json({ error: "Server error" });
         }
-        console.log(result);
+        console.log({ data: result });
         res.status(200).json({ data: result });
       }
     );
@@ -40,6 +40,7 @@ const addProject = async (req, res) => {
   if (!data.project || !data.user_id) {
     return res.status(400).json("Bad request: missing required fields");
   }
+
   connectDB.getConnection((err, connection) => {
     if (err) {
       console.log("Cannot connect to database:", err);

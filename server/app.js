@@ -24,7 +24,6 @@ app.use(cors(corsOptions));
 app.use("/login", login);
 app.use("/users", authenticateUser, users);
 app.use("/projects", authenticateUser, projects);
-app.use("/logs", authenticateUser, logs);
 
 app.use(notFound);
 

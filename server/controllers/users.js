@@ -16,7 +16,6 @@ const addUser = async (req, res) => {
   if (!data.username || !data.password) {
     return res.status(400).json("Bad request: missing required fields");
   }
-
   const salt = await bcrypt.genSalt(10);
   const hashedPass = await bcrypt.hash(data.password, salt);
 
