@@ -4,3 +4,4 @@ server/node_modules/
 client_old/
 client/.gitignore
 .gitignore
+db-backup.sql
