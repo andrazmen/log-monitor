@@ -12,18 +12,16 @@ const login = require("./routes/login");
 const users = require("./routes/users");
 const projects = require("./routes/projects");
 
-app.use(express.json());
-
 const corsOptions = {
   origin: [
     "http://localhost:5173",
-    "https://log-monitor-client.onrender.com",
     "https://log-monitor-production.up.railway.app",
   ], // frontend
   methods: ["GET", "POST"],
   credentials: true,
 };
 
+app.use(express.json());
 app.use(cors(corsOptions));
 
 app.use("/login", login);
