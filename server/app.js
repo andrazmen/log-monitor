@@ -15,8 +15,9 @@ const projects = require("./routes/projects");
 app.use(express.json());
 
 const corsOptions = {
-  origin: true, // frontend
+  origin: ["http://localhost:5173", "https://log-monitor-client.onrender.com"], // frontend
   methods: ["GET", "POST"],
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
