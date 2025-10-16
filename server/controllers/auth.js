@@ -4,12 +4,22 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
+  console.log(
+    "Received login request:",
+    req.user,
+    req.params,
+    req.query,
+    req.body
+  );
   const data = {
     username: req.body.username,
     password: req.body.password,
   };
   if (!data.username || !data.password) {
-    return res.status(400).json("Bad request: missing required fields");
+    console.error("ERROR: Bad request: missing required fields");
+    return res
+      .status(400)
+      .json({ error: "Bad request: missing required fields" });
   }
   try {
     const output = await new Promise((resolve, reject) => {
@@ -36,15 +46,14 @@ const login = async (req, res) => {
     });
 
     if (output.length === 0) {
+      console.error("ERROR: Unauthorized: invalid credentials");
       res.status(401).json({ error: "Unauthorized: invalid credentials" });
     }
-    console.log("OUTPUT", output.length);
     const match = await bcrypt.compare(data.password, output[0]?.password);
     if (!match) {
+      console.error("ERROR: Unauthorized: wrong password");
       res.status(401).json({ error: "Unauthorized: wrong password" });
     }
-    console.log("Passwords match, authenticated");
-
     const token = jwt.sign(
       {
         user_id: output[0].id,
@@ -54,6 +63,9 @@ const login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_LIFETIME }
     );
+    console.log("Passwords match, authenticated:", {
+      data: { user_id: output[0].id, username: output[0].username, token },
+    });
     res.status(200).json({
       data: { user_id: output[0].id, username: output[0].username, token },
     });

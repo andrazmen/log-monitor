@@ -1,6 +1,13 @@
 const connectDB = require("../db/connection").pool;
 
 const getLogs = async (req, res) => {
+  console.log(
+    "Received get logs request:",
+    req.user,
+    req.params,
+    req.query,
+    req.body
+  );
   const user_id = req.user.id;
   const data = {
     project_id: req.params.id,
@@ -13,7 +20,6 @@ const getLogs = async (req, res) => {
   };
   const limit = 10;
   const offset = (data.page - 1) * limit;
-  console.log(data);
   connectDB.getConnection((err, connection) => {
     if (err) {
       console.log("Cannot connect to database:", err);
@@ -93,6 +99,13 @@ const getLogs = async (req, res) => {
 };
 
 const addLog = async (req, res) => {
+  console.log(
+    "Received add log request:",
+    req.user,
+    req.params,
+    req.query,
+    req.body
+  );
   const data = {
     project_id: req.params.id,
     source: req.body.source,
@@ -107,7 +120,10 @@ const addLog = async (req, res) => {
     !data.severity ||
     !data.message
   ) {
-    return res.status(400).json("Bad request: missing required fields");
+    console.error("ERROR: Bad request: missing required fields");
+    return res
+      .status(400)
+      .json({ error: "Bad request: missing required fields" });
   }
   const severities = [
     "EMERG",
@@ -120,7 +136,8 @@ const addLog = async (req, res) => {
     "DEBUG",
   ];
   if (!severities.includes(data.severity)) {
-    return res.status(400).json("Bad request: invalid severity");
+    console.error("ERROR: Bad request: invalid severity");
+    return res.status(400).json({ error: "Bad request: invalid severity" });
   }
   connectDB.getConnection((err, connection) => {
     if (err) {
@@ -159,6 +176,13 @@ const addLog = async (req, res) => {
 };
 
 const getStats = async (req, res) => {
+  console.log(
+    "Received get stats request:",
+    req.user,
+    req.params,
+    req.query,
+    req.body
+  );
   const user_id = req.user.id;
   const project_id = req.params.id;
   connectDB.getConnection((err, connection) => {
@@ -202,6 +226,13 @@ const getStats = async (req, res) => {
 };
 
 const exportLogs = async (req, res) => {
+  console.log(
+    "Received export logs request:",
+    req.user,
+    req.params,
+    req.query,
+    req.body
+  );
   const user_id = req.user.id;
   const data = {
     project_id: req.params.id,
@@ -212,7 +243,6 @@ const exportLogs = async (req, res) => {
     sort: req.query.sort || "desc",
     page: req.query.page || 1,
   };
-  console.log(data);
   connectDB.getConnection((err, connection) => {
     if (err) {
       console.log("Cannot connect to database:", err);

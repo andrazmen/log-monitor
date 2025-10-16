@@ -2,6 +2,13 @@ const connectDB = require("../db/connection").pool;
 const bcrypt = require("bcryptjs");
 
 const addUser = async (req, res) => {
+  console.log(
+    "Received add user request:",
+    req.user,
+    req.params,
+    req.query,
+    req.body
+  );
   const user_role = req.user.role;
   const data = {
     username: req.body.username,
@@ -9,12 +16,16 @@ const addUser = async (req, res) => {
     role: req.body.role,
   };
   if (user_role !== "admin") {
+    console.error("ERROR: Forbidden: only admin can add users");
     return res
       .status(403)
       .json({ error: "Forbidden: only admin can add users" });
   }
-  if (!data.username || !data.password) {
-    return res.status(400).json("Bad request: missing required fields");
+  if (!data.username || !data.password || !data.role) {
+    console.error("ERROR: Bad request: missing required fields");
+    return res
+      .status(400)
+      .json({ error: "Bad request: missing required fields" });
   }
   const salt = await bcrypt.genSalt(10);
   const hashed_pass = await bcrypt.hash(data.password, salt);

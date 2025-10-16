@@ -38,7 +38,7 @@ const Toolbar = () => {
       }
     }
   };
-
+  // add project
   const addProject = async (data) => {
     try {
       const response = await customFetch("/projects", {

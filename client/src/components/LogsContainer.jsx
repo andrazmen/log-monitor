@@ -24,7 +24,7 @@ const LogsContainer = () => {
     });
     navigate(`?${new_params.toString()}`);
   };
-
+  // export logs
   const exportData = async () => {
     try {
       setLoadingState(true);

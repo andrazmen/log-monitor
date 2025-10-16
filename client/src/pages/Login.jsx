@@ -26,7 +26,7 @@ export const action =
       localStorage.setItem("token", JSON.stringify(token));
       return redirect("/");
     } catch (error) {
-      console.log(error);
+      console.log(error?.response?.data);
     }
   };
 

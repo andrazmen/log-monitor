@@ -10,6 +10,9 @@ export const loader = async ({ request }) => {
     return redirect("/login");
   }
   try {
+    const params = Object.fromEntries([
+      ...new URL(request.url).searchParams.entries(),
+    ]);
     // fetch projects
     const projects = await customFetch("/projects", {
       headers: {
@@ -27,9 +30,6 @@ export const loader = async ({ request }) => {
       };
     }
     // fetch logs
-    const params = Object.fromEntries([
-      ...new URL(request.url).searchParams.entries(),
-    ]);
     const project_id = params.project_id || projects.data.data[0].id;
     const logs = await customFetch(`projects/${project_id}/logs`, {
       params,

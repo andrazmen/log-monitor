@@ -2,11 +2,12 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-
 const notFound = (req, res) => res.status(404).send("Route does not exist");
 
+// authentication
 const authenticateUser = require("./middleware/auth");
 
+// routes
 const login = require("./routes/login");
 const users = require("./routes/users");
 const projects = require("./routes/projects");

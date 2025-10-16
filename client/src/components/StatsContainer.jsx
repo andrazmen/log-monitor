@@ -15,7 +15,13 @@ const StatsContainer = () => {
     "DEBUG",
   ];
   const severity_stats = all_severities.map((level) => {
-    const found = stats?.severity.find((item) => item.severity === level);
+    if (stats.length === 0) {
+      return {
+        severity: level,
+        count: 0,
+      };
+    }
+    const found = stats.severity.find((item) => item.severity === level);
     return {
       severity: level,
       count: found ? found.count : 0,
