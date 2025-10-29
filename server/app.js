@@ -1,6 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 
+const dotenv = require("dotenv");
+
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
+
 const app = express();
 const notFound = (req, res) => res.status(404).send("Route does not exist");
 
@@ -13,10 +19,7 @@ const users = require("./routes/users");
 const projects = require("./routes/projects");
 
 const corsOptions = {
-  origin: [
-    "http://localhost:5173",
-    "https://log-monitor-production.up.railway.app",
-  ], // frontend
+  origin: [process.env.LOCAL_URL, process.env.PUBLIC_URL], // frontend
   methods: ["GET", "POST"],
   credentials: true,
 };

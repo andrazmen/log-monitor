@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { getProjects, addProject } = require("../controllers/projects");
+const { getProjects, addProject } = require("../controllers/projectController");
 const {
   getLogs,
   addLog,
   getStats,
   exportLogs,
-} = require("../controllers/logs");
+} = require("../controllers/logController");
 
 router.get("/", getProjects);
 router.post("/", addProject);
